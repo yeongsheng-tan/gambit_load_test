@@ -10,6 +10,7 @@
     "easygraphql-load-tester": "^0.3.6"
   },
   "scripts": {
+    "easygraphql-load-tester": "artillery run artillery.yml",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
