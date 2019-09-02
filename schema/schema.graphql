@@ -1,0 +1,388 @@
+schema {
+  query: CacheQuery
+  subscription: CacheSubscription
+}
+
+type CacheQuery {
+  events(query: SportMarketQueryInputType!): [EventType]
+  odds(query: SportMarketQueryInputType!): [OddsType]
+  outrights(query: OutrightQueryInputType!): [OutrightType!]
+}
+
+type CacheSubscription {
+  event(id: Int = null): EventType
+  events(query: SportMarketSubscriptionInputType!): EventsSubscriptionType
+}
+
+type ContentType {
+  id: Int!
+  translations: [TranslationType]
+  version: Int
+}
+
+"""
+The `Date` scalar type represents a year, month and day in accordance with the
+[ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) standard.
+"""
+scalar Date
+
+"""
+The `DateTime` scalar type represents a date and time. `DateTime` expects
+timestamps to be formatted in accordance with the
+[ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) standard.
+"""
+scalar DateTime
+
+"""
+The `DateTimeOffset` scalar type represents a date, time and offset from UTC.
+`DateTimeOffset` expects timestamps to be formatted in accordance with the
+[ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) standard.
+"""
+scalar DateTimeOffset
+
+scalar Decimal
+
+enum EnumMarketPageType {
+  Unknown
+  Today
+  EarlyMarket
+  Live
+  OETG
+  CorrectScore
+  HTFT
+
+  """DC_1X2"""
+  _1X2DC
+  FGLG
+  Mixparlay
+  Outright
+  PopularEvents
+}
+
+enum EnumMarketType {
+  Unknown
+  Handicap
+  OddEven
+  OverUnder
+  CorrectScore
+
+  """1X2"""
+  M1X2
+  TotalGoal
+  FH_Handicap
+  FH_1X2
+  FH_OverUnder
+  HTFT
+  MoneyLine
+  FH_OddEven
+  FGLG
+  FH_CorrectScore
+  DoubleChance
+  LiveScore
+  FH_LiveScore
+  Game
+  OutRight
+  MixParlay
+}
+
+type EventResultExtraInfoType {
+  awayRedCards: Int!
+  eventResultId: Int!
+  extraFirstHalfDuration: Int!
+  extraSecondHalfDuration: Int!
+  firstHalfDuration: Int!
+  homeRedCards: Int!
+  injuryTime: Int!
+  liveDisplayLines: Int!
+  period: Int!
+  periodStartTime: Date!
+  periodStopTime: Date!
+  secondHalfDuration: Int!
+  version: Int
+}
+
+type EventResultType {
+  event: EventType
+  eventResultId: Int!
+  extraInfo: EventResultExtraInfoType
+  fullTimeAwayScore: Int!
+  fullTimeHomeScore: Int!
+  halfTimeAwayScore: Int!
+  halfTimeHomeScore: Int!
+  isMixParlay: Boolean!
+  kickoffTime: Date!
+  liveAwayScore: Int!
+  liveHandicapType: TiEnumHandicapType
+  liveHomeScore: Int!
+  liveMixparlayHandicapType: TiEnumHandicapType
+  liveMixparlayOddsCount: Int!
+  liveNBTOddsCount: Int!
+  liveOddsCount: Int!
+  marketGroup: MarketGroupType
+  mixparlayHandicapType: TiEnumHandicapType
+  mixparlayOddsCount: Int!
+  nonliveHandicapType: TiEnumHandicapType
+  nonliveNBTOddsCount: Int!
+  nonliveOddsCount: Int!
+  status: TiEnumEventStatus
+  version: Int
+}
+
+type EventsSubscriptionType {
+  deletedEvents: [Int]
+  events: [EventType]
+}
+
+type EventType {
+  awayJersey: String!
+  awayTeam: TeamType
+  eventCode: String!
+  eventDate: Date!
+  eventDateType: TiEnumEventDateType
+  eventId: Int!
+  hasStatistics: Boolean!
+  homeJersey: String!
+  homeTeam: TeamType
+  liveDisplayLines: Int!
+  liveHandicapType: TiEnumHandicapType
+  liveMixparlayHandicapType: TiEnumHandicapType
+  liveMixparlayOddsCount: Int!
+  liveNBTOddsCount: Int!
+  liveOddsCount: Int!
+  mixparlayHandicapType: TiEnumHandicapType
+  mixparlayOddsCount: Int!
+  mobileStreamId: Int!
+  mobileStreamStatus: String!
+  nonliveHandicapType: TiEnumHandicapType
+  nonliveNBTOddsCount: Int!
+  nonliveOddsCount: Int!
+  realKickoffTime: Date!
+  showTime: String!
+  showTimeType: ShowTimeDisplayType
+  tournament: TournamentType
+  tvChannel: String!
+  version: Int
+  videoDisallowCountryList: String!
+}
+
+type MarketGroupType {
+  awayExtension: ContentType
+  awayTemplate: String!
+  displayPriority: Int!
+  homeExtension: ContentType
+  homeTemplate: String!
+  isSingle: Boolean!
+  isYesNo: Boolean!
+  marketGroupId: Int!
+  marketGroupName: ContentType
+  scoringType: Int!
+  version: Int
+}
+
+"""
+The `Milliseconds` scalar type represents a period of time represented as the total number of milliseconds.
+"""
+scalar Milliseconds
+
+type OddsType {
+  betCondition: String!
+  eventResult: EventResultType
+  firstHalfHandicapSpread: Decimal!
+  fullTimeHandicapSpread: Decimal!
+  isLive: Boolean!
+  isMixparlay: Boolean!
+  marketDisplayType: EnumMarketType
+  marketId: Int!
+  maxBet: Decimal!
+  oddsId: Int!
+  point: Decimal!
+  prices: [Decimal]
+  status: TiEnumOddsStatus
+  version: Int
+}
+
+input OutrightQueryInputType {
+  sportType: TiEnumSportType = null
+  version: Int = null
+}
+
+type OutrightType {
+  eventCode: String!
+  eventDate: Date!
+  eventDateType: TiEnumEventDateType
+  isLive: Boolean!
+  isWalkinOnly: Boolean!
+  maxBet: Decimal!
+  outrightId: Int!
+  price: Decimal!
+  team: TeamType
+  tournament: TournamentType
+  version: Int
+}
+
+type RegionType {
+  countryCode: String!
+  isCountry: Boolean!
+  regionId: Int!
+  regionName: ContentType
+  version: Int
+}
+
+"""
+The `Seconds` scalar type represents a period of time represented as the total number of seconds.
+"""
+scalar Seconds
+
+enum ShowTimeDisplayType {
+  NONE
+  DATE
+  DATE_TIME
+  RED_LIVE
+  BLUE_LIVE
+}
+
+input SportMarketQueryInputType {
+  sportType: TiEnumSportType = null
+  marketPageType: EnumMarketPageType = null
+  version: Int = null
+}
+
+input SportMarketSubscriptionInputType {
+  sportType: TiEnumSportType = null
+  marketPageType: EnumMarketPageType = null
+}
+
+type SportType {
+  sportName: ContentType
+  sportShortName: ContentType
+  sportType: TiEnumSportType
+  version: Int
+}
+
+type TeamType {
+  teamId: Int!
+  teamName: ContentType
+  teamType: TiEnumTeamType
+  version: Int
+}
+
+enum TiEnumEventDateType {
+  UNKNOWN
+  TODAY
+  PLUS_1
+  PLUS_2
+  PLUS_3
+  PLUS_4
+  PLUS_5
+  PLUS_6_OVER
+  EARLY_MARKET
+}
+
+enum TiEnumEventStatus {
+  UNKNOWN
+  RUNNING
+  INTERNAL
+  CLOSED
+  COMPLETED
+}
+
+enum TiEnumHandicapType {
+  UNKNOWN
+  HOME
+  AWAY
+  NONE
+}
+
+enum TiEnumLanguageType {
+  NONE
+  EN
+  ZH_TW
+  ZH_CN
+  JA_JP
+  KO_KR
+  TH_TH
+  VI_VN
+  ID_ID
+  DE_DE
+  ES_ES
+  MY_MM
+  FR_FR
+  RU_RU
+  PT_PT
+  ZH_CW
+}
+
+enum TiEnumOddsStatus {
+  UNKNOWN
+  RUNNING
+  SUSPEND
+  INTERNAL
+  CLOSED
+}
+
+enum TiEnumSportType {
+  UNKNOWN
+  SOCCER
+  BASKETBALL
+  FOOTBALL
+  HOCKEY
+  BADMINTON
+  POOL
+  MOTOR_SPORT
+  TENNIS
+  BASEBALL
+  VOLLEYBALL
+  OTHERS
+  GOLF
+  BOXING
+  CRICKET
+  TABLE_TENNIS
+  RUGBY
+  HANDBALL
+  CYCLING
+  ATHLETICS
+  BEACH_SOCCER
+  FUTSAL
+  ENTERTAINMENT
+  FINANCIAL
+  DARTS
+  OLYMPIC
+  LACROSSE
+  WATER_POLO
+  WINTER_SPORTS
+  SQUASH
+  FIELD_HOCKEY
+  MIXED_MARTIAL_ARTS
+  E_SPORTS
+  GAELIC_FOOTBALL
+  HURLING
+  MUAY_THAI
+  AUSSIE_RULES_FOOTBALL
+  BANDY
+  WINTER_OLYMPIC
+}
+
+enum TiEnumTeamType {
+  PLAYER
+  TEAM
+  NATIONAL
+}
+
+type TournamentType {
+  isOlympicSpecialTournament: Boolean!
+  isSpecialTournament: Boolean!
+  isTestOnly: Boolean!
+  region: RegionType
+  sport: SportType
+  sportVersion: Int
+  tournamentCode: String!
+  tournamentId: Int!
+  tournamentInfo: ContentType
+  tournamentName: ContentType
+  version: Int
+}
+
+type TranslationType {
+  language: TiEnumLanguageType
+  value: String!
+}
