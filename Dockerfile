@@ -1,4 +1,4 @@
-FROM node:alpine
+FROM mhart/alpine-node:12
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 COPY package*.json ./
@@ -6,4 +6,4 @@ COPY package*.json ./
 RUN npm install -g npm yarn prettier eslint && npm install
 COPY . .
 
-ENTRYPOINT ["npx ntl"]
+ENTRYPOINT ["/usr/bin/npx ntl"]
