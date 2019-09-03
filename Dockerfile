@@ -6,4 +6,4 @@ COPY package*.json ./
 RUN npm install -g npm yarn prettier eslint && npm install
 COPY . .
 
-ENTRYPOINT ["/usr/bin/npx ntl"]
+ENTRYPOINT ["/usr/bin/npx", "ntl"]
