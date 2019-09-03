@@ -10,22 +10,29 @@ const loadTester = new EasyGraphQLLoadTester(cacheQuerySchema)
 
 const queries = [
   {
-    name: 'events',
+    name: 'events(query: {sportType: SOCCER, marketPageType: Live})',
     query: `
-      query($query:SportMarketQueryInputType!){
-        events(query:$query) {
-          eventId,
-          eventCode,
-          awayTeam {
-            teamId
-          }
-        }
-      },
       {
-        "variables" {
-          "query": {
-            "sportType": "SOCCER",
-            "marketPageType": "Live"
+        events(query: {sportType: SOCCER, marketPageType: Live}){
+          version
+          eventId
+          eventCode
+          eventDate
+          awayTeam{
+            teamName {
+              translations {
+                language
+                value
+              }
+            }
+          }
+          homeTeam{
+            teamName {
+              translations {
+                language
+                value
+              }
+            }
           }
         }
       }
@@ -34,7 +41,7 @@ const queries = [
 ]
 
 const options = {
-  selectedQueries: ['events(query: $query)'],
+  selectedQueries: ['events(query: {sportType: SOCCER, marketPageType: Live})'],
   customQueries: queries,
 }
 
