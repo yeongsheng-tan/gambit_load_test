@@ -1,8 +1,8 @@
 config:
-  target: "https://odds-api.sbotest.com/"
+  target: "https://odds-api.sbotest.com"
   phases:
-    - duration: 300
-      arrivalRate: 100
+    - duration: 5
+      arrivalRate: 2
   processor: "./index.js"
 scenarios:
   - name: "GraphQL Query load test"
