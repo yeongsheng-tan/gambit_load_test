@@ -2,15 +2,20 @@
   "name": "gambit_load_test",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "dependencies": {
-    "artillery": "^1.6.0-28"
+    "artillery": "^1.6.0-28",
+    "easygraphql-load-tester": "^0.3.6",
+    "express": "^4.17.1",
+    "npm": "^6.11.3"
   },
   "devDependencies": {
-    "easygraphql-load-tester": "^0.3.6"
+    "nodemon": "^1.19.2"
   },
   "scripts": {
-    "easygraphql-load-tester": "artillery run artillery.yml"
+    "dev": "nodemon server.js",
+    "easygraphql-load-tester": "artillery run -o report.json artillery.yml"
+    "generate-load-test-report": "artillery report report.json"
   },
   "author": "",
   "license": "ISC"

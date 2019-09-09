@@ -5,7 +5,6 @@ const fs = require('fs')
 const path = require('path')
 
 const cacheQuerySchema = fs.readFileSync(path.join(__dirname, 'schema', 'schema.graphql'), 'utf8')
-
 const loadTester = new EasyGraphQLLoadTester(cacheQuerySchema)
 
 const queries = [
@@ -46,7 +45,6 @@ const options = {
 }
 
 const testCases = loadTester.artillery(options)
-
 module.exports = {
   testCases
 }
